@@ -6,7 +6,7 @@ module ExtremeStartup
     let(:question) { GeneralKnowledgeQuestion.new(Player.new) }
 
     it "converts to a string" do
-      question.as_text.should =~ /wh.+/
+      expect(question.as_text).to match(/wh.+/)
     end
   end
 end

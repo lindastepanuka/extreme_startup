@@ -7,22 +7,22 @@ module ExtremeStartup
     let(:question) { SquareCubeQuestion.new(Player.new) }
     
     it "converts to a string" do
-      question.as_text.should =~ /which of the following numbers is both a square and a cube: (\d+, )+(\d+)/i
+      expect(question.as_text).to match(/which of the following numbers is both a square and a cube: (\d+, )+(\d+)/i)
     end
     
     context "when the numbers are known" do
       let(:question) { SquareCubeQuestion.new(Player.new, 62, 63, 64) }
         
       it "converts to the right string" do
-        question.as_text.should =~ /which of the following numbers is both a square and a cube: 62, 63, 64/i
+        expect(question.as_text).to match(/which of the following numbers is both a square and a cube: 62, 63, 64/i)
       end
             
       it "identifies a correct answer" do
-        question.answered_correctly?("64").should be_true
+        expect(question.answered_correctly?("64")).to be_truthy
       end
            
       it "identifies an incorrect answer" do
-        question.answered_correctly?("63").should be_false
+        expect(question.answered_correctly?("63")).to be_falsey
       end
     end
     
@@ -30,8 +30,8 @@ module ExtremeStartup
       let(:question) { SquareCubeQuestion.new(Player.new, 0, 5) }
        
       it "doesn't crash with divide by zero" do
-        question.answered_correctly?("0").should be_true
-        question.answered_correctly?("5").should be_false
+        expect(question.answered_correctly?("0")).to be_truthy
+        expect(question.answered_correctly?("5")).to be_falsey
       end
     end
     
@@ -39,11 +39,11 @@ module ExtremeStartup
       let(:question) { SquareCubeQuestion.new(Player.new, 64, 65, 729) }
 
       it "identifies a correct answer" do
-        question.answered_correctly?("64, 729").should be_true
+        expect(question.answered_correctly?("64, 729")).to be_truthy
       end
 
       it "identifies an incorrect answer" do
-        question.answered_correctly?("64").should be_false
+        expect(question.answered_correctly?("64")).to be_falsey
       end
     end
       

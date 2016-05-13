@@ -12,8 +12,8 @@ module ExtremeStartup
       it "when none of the players have any points, it sorts by the order they were added" do
         scoreboard.new_player player_a
         scoreboard.new_player player_b
-        scoreboard.leaderboard_position(player_a).should == 1
-        scoreboard.leaderboard_position(player_b).should == 2
+        expect(scoreboard.leaderboard_position(player_a)).to eq(1)
+        expect(scoreboard.leaderboard_position(player_b)).to eq(2)
       end
     
       it "it sorts by the number of points" do

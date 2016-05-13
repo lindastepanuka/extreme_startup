@@ -13,7 +13,7 @@ module ExtremeStartup
 
     context "when displaying response with an answer encoded into ASCII-8BIT" do
       it "should not raise error" do
-        lambda { "For player #{:player}\n#{question.display_result}" }.should_not raise_error
+        expect { "For player #{:player}\n#{question.display_result}" }.not_to raise_error
       end
     end
 

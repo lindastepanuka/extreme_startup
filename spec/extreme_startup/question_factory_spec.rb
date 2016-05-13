@@ -10,8 +10,8 @@ module ExtremeStartup
     context "in the first round" do
        it "creates both AdditionQuestions and SquareCubeQuestion" do
           questions = 10.times.map { factory.next_question(player) }
-          questions.any? { |q| q.is_a?(AdditionQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(MaximumQuestion) }.should be_true
+          expect(questions.any? { |q| q.is_a?(AdditionQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(MaximumQuestion) }).to be_truthy
           questions.all? { |q| [AdditionQuestion, MaximumQuestion].include? q.class }
         end
     end
@@ -23,10 +23,10 @@ module ExtremeStartup
       
        it "creates four different types of question" do
           questions = 20.times.map { factory.next_question(player) }
-          questions.any? { |q| q.is_a?(AdditionQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(MaximumQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(MultiplicationQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(SquareCubeQuestion) }.should be_true
+          expect(questions.any? { |q| q.is_a?(AdditionQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(MaximumQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(MultiplicationQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(SquareCubeQuestion) }).to be_truthy
           questions.all? { |q| [AdditionQuestion, MaximumQuestion, MultiplicationQuestion, SquareCubeQuestion, ].include? q.class }
         end
      
@@ -40,12 +40,12 @@ module ExtremeStartup
       
        it "moves a sliding window forward, keeping 5 question types, so AdditionQuestions no longer appear" do
           questions = 30.times.map { factory.next_question(player) }
-          questions.any? { |q| q.is_a?(AdditionQuestion) }.should be_false
-          questions.any? { |q| q.is_a?(MaximumQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(MultiplicationQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(SquareCubeQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(MultiplicationQuestion) }.should be_true
-          questions.any? { |q| q.is_a?(SquareCubeQuestion) }.should be_true
+          expect(questions.any? { |q| q.is_a?(AdditionQuestion) }).to be_falsey
+          expect(questions.any? { |q| q.is_a?(MaximumQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(MultiplicationQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(SquareCubeQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(MultiplicationQuestion) }).to be_truthy
+          expect(questions.any? { |q| q.is_a?(SquareCubeQuestion) }).to be_truthy
           questions.all? { |q| [MaximumQuestion, MultiplicationQuestion, SquareCubeQuestion, GeneralKnowledgeQuestion, PrimesQuestion].include? q.class }
         end
      

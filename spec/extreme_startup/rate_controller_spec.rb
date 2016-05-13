@@ -6,31 +6,31 @@ module ExtremeStartup
     let(:controller) { RateController.new }
         
     it "reduces delays after successive correct answers" do
-      controller.delay_before_next_request(FakeAnswer.new(:correct)).should == 4.9
-      controller.delay_before_next_request(FakeAnswer.new(:correct)).should == 4.8
-      controller.delay_before_next_request(FakeAnswer.new(:correct)).should == 4.7
+      expect(controller.delay_before_next_request(FakeAnswer.new(:correct))).to eq(4.9)
+      expect(controller.delay_before_next_request(FakeAnswer.new(:correct))).to eq(4.8)
+      expect(controller.delay_before_next_request(FakeAnswer.new(:correct))).to eq(4.7)
     end
     
     it "enforces minimum delay between successive correct answers is one second" do
       1000.times { controller.delay_before_next_request(FakeAnswer.new(:correct)) }
-      controller.delay_before_next_request(FakeAnswer.new(:correct)).should == 1
+      expect(controller.delay_before_next_request(FakeAnswer.new(:correct))).to eq(1)
     end
         
     it "increases delays after successive wrong answers" do
-      controller.delay_before_next_request(FakeAnswer.new(:wrong)).should == 5.1
-      controller.delay_before_next_request(FakeAnswer.new(:wrong)).should == 5.2
-      controller.delay_before_next_request(FakeAnswer.new(:correct)).should == 5.1
-      controller.delay_before_next_request(FakeAnswer.new(:wrong)).should == 5.2
-      controller.delay_before_next_request(FakeAnswer.new(:wrong)).should == 5.3
+      expect(controller.delay_before_next_request(FakeAnswer.new(:wrong))).to eq(5.1)
+      expect(controller.delay_before_next_request(FakeAnswer.new(:wrong))).to eq(5.2)
+      expect(controller.delay_before_next_request(FakeAnswer.new(:correct))).to eq(5.1)
+      expect(controller.delay_before_next_request(FakeAnswer.new(:wrong))).to eq(5.2)
+      expect(controller.delay_before_next_request(FakeAnswer.new(:wrong))).to eq(5.3)
     end
     
     it "enforces maximum delay between successive wrong answers is 20 seconds" do
       1000.times { controller.delay_before_next_request(FakeAnswer.new(:wrong)) }
-      controller.delay_before_next_request(FakeAnswer.new(:wrong)).should == 20
+      expect(controller.delay_before_next_request(FakeAnswer.new(:wrong))).to eq(20)
     end
     
     it "delays 20 seconds after error responses" do
-      controller.delay_before_next_request(FakeAnswer.new(:error)).should == 20
+      expect(controller.delay_before_next_request(FakeAnswer.new(:error))).to eq(20)
     end
     
     it "occasionally switches a SlashdotRateController if score is above 2000" do
@@ -39,8 +39,8 @@ module ExtremeStartup
           100 
         end
       end
-      controller.update_algorithm_based_on_score(100).should == controller
-      controller.update_algorithm_based_on_score(2001).should be_instance_of SlashdotRateController
+      expect(controller.update_algorithm_based_on_score(100)).to eq(controller)
+      expect(controller.update_algorithm_based_on_score(2001)).to be_instance_of SlashdotRateController
       
     end
     
